@@ -101,7 +101,6 @@ func (e *Exchange) Cancel(oid string) (*RPCResponse, error) {
 	return e.makeRequest(req)
 }
 
-
 // CancelAll orders
 func (e *Exchange) CancelAll(instrument string) (*RPCResponse, error) {
 	req := RPCRequest{
@@ -115,6 +114,26 @@ func (e *Exchange) CancelAll(instrument string) (*RPCResponse, error) {
 		return nil, err
 	}
 	return e.makeRequest(req)
+}
+
+func (e *Exchange) GetPositions() (*RPCResponse, []PositionResponse, error) {
+	req := RPCRequest{
+		Action: "/api/v1/private/positions",
+	}
+	if err := req.GenerateSig(e.key, e.secret); err != nil {
+		return nil, nil, err
+	}
+	res, err := e.makeRequest(req)
+	if err != nil {
+		return nil, nil, err
+	}
+	positions := make([]PositionResponse, 0)
+	if len(res.Result) != 0 {
+		if err := json.Unmarshal(res.Result, &positions); err != nil {
+			return nil, nil, fmt.Errorf("unable to unmarshal result: %s", err)
+		}
+	}
+	return res, positions, nil
 }
 
 func (e *Exchange) placeOrder(action string, or *OrderRequest) (*RPCResponse, *OrderResponse, error) {

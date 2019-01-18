@@ -22,6 +22,25 @@ type TradeResponse struct {
 	TradeSeq      int64       `json:"tradeSeq"`
 }
 
+type PositionResponse struct {
+	Instrument        string  `json:"instrument"`
+	Size              int     `json:"size"`
+	AveragePrice      float64 `json:"averagePrice"`
+	Direction         string  `json:"direction"`
+	SizeBTC           float64 `json:"sizeBtc"`
+	FloatingPl        float64 `json:"floatingPl"`
+	RealizedPl        float64 `json:"realizedPl"`
+	EstLiqPrice       float64 `json:"estLiqPrice"`
+	MarkPrice         float64 `json:"markPrice"`
+	IndexPrice        float64 `json:"indexPrice"`
+	MaintenanceMargin float64 `json:"maintenanceMargin"`
+	InitialMargin     float64 `json:"initialMargin"`
+	SettlementPrice   float64 `json:"settlementPrice"`
+	Delta             float64 `json:"delta"`
+	OpenOrderMargin   float64 `json:"openOrderMargin"`
+	ProfitLoss        float64 `json:"profitLoss"`
+}
+
 // OrderBookResponse is the data returned by an orderbook change
 type OrderBookResponse struct {
 	State           string            `json:"state"`

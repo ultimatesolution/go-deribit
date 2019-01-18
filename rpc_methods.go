@@ -87,6 +87,21 @@ func (e *Exchange) Edit(oid string, qty int, price, stopPrice float64, postOnly 
 	return res, &ret, nil
 }
 
+// Cancel order by orderId
+func (e *Exchange) Cancel(oid string) (*RPCResponse, error) {
+	req := RPCRequest{
+		Action: "/api/v1/private/cancel",
+		Arguments: map[string]interface{}{
+			"orderId": oid,
+		},
+	}
+	if err := req.GenerateSig(e.key, e.secret); err != nil {
+		return nil, err
+	}
+	return e.makeRequest(req)
+}
+
+
 // CancelAll orders
 func (e *Exchange) CancelAll(instrument string) (*RPCResponse, error) {
 	req := RPCRequest{

@@ -20,10 +20,14 @@ type TradeResponse struct {
 	Me            string      `json:"me"`
 	TickDirection int         `json:"tickDirection"`
 	TradeSeq      int64       `json:"tradeSeq"`
+	// T - if subscriber is taker, M - if subscriber is maker
+	Liquidity string `json:"liquidity"`
 }
 
 type PositionResponse struct {
-	Instrument        string  `json:"instrument"`
+	Instrument string `json:"instrument"`
+	// The type of instrument. "future" or "option"
+	Kind              string  `json:"kind"`
 	Size              int     `json:"size"`
 	AveragePrice      float64 `json:"averagePrice"`
 	Direction         string  `json:"direction"`
@@ -39,6 +43,22 @@ type PositionResponse struct {
 	Delta             float64 `json:"delta"`
 	OpenOrderMargin   float64 `json:"openOrderMargin"`
 	ProfitLoss        float64 `json:"profitLoss"`
+}
+
+type PortfolioResponse struct {
+	Currency          string  `json:"currency"`
+	Equity            float64 `json:"equity"`
+	MaintenanceMargin float64 `json:"maintenanceMargin"`
+	InitialMargin     float64 `json:"initialMargin"`
+	AvailableFunds    float64 `json:"availableFunds"`
+	unrealizedPl      float64 `json:"unrealizedPl"`
+	realizedPl        float64 `json:"realizedPl"`
+	totalPl           float64 `json:"totalPl"`
+}
+
+type PortfolioEvent struct {
+	Portfolio []PortfolioResponse `json:"portfolio"`
+	Positions []PositionResponse  `json:"positions"`
 }
 
 // OrderBookResponse is the data returned by an orderbook change

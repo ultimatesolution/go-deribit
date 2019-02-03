@@ -119,7 +119,7 @@ func (n *RPCNotification) DecodeOrderBook() (*OrderBookResponse, error) {
 
 // DecodeUserOrder takes the result from the notification response and decodes it an order response
 func (n *RPCNotification) DecodeUserOrder() ([]*OrderResponseDetail, error) {
-	if n.Message != fmt.Sprintf("user_orders_event") {
+	if n.Message != fmt.Sprintf("user_order_event") {
 		return nil, fmt.Errorf("Attempt to convert %s notification to a user order", n.Message)
 	}
 	var ret []*OrderResponseDetail
